@@ -1,8 +1,9 @@
 import { ServiceBusClient, ServiceBusReceiver } from '@azure/service-bus';
-import { OnModuleInit } from '@nestjs/common';
+import { OnModuleInit ,Inject } from '@nestjs/common';
 import { MobileServices } from './mobile.service';
 import { Mobile } from 'libs/src/Entity/Mobile.schema';
 import { Imessage } from 'libs/src';
+import { Logger } from 'winston';
 
 /**
  * Abstract class for creating Azure Service Bus consumers in NestJS.
@@ -18,7 +19,8 @@ export abstract class ServiceBusConsumerService implements OnModuleInit {
    * @param {MobileServices} _mobileService - The Repo for Mobile Enitity.
    * 
    */
-  constructor(connectionString: string, queueName: string , _mobileService: MobileServices) {
+  constructor(connectionString: string, queueName: string , _mobileService: MobileServices ,@Inject('winston')
+  protected readonly logger: Logger,) {
     this.serviceBusClient = new ServiceBusClient(connectionString);
     this.receiver = this.serviceBusClient.createReceiver(queueName);
     this._mobileService= _mobileService
@@ -53,6 +55,7 @@ export abstract class ServiceBusConsumerService implements OnModuleInit {
       tax
     }
       )
+      this.logger.info(` ServiceBusConsumerService recived a message and a new resource is created `)
     // Call the child class-specific logic
     return this.handleCustomMessage(message);
   }
@@ -65,14 +68,12 @@ export abstract class ServiceBusConsumerService implements OnModuleInit {
           const messageBody = message.body;
           await this.handleMessage(messageBody);
         } catch (error) {
-          console.error('Error handling message:', error);
+          this.logger.error(` ServiceBusConsumerService recived an error ${error} `)
         }
       },
       processError: async (args) => {
-        console.error(
-          `Error occurred with ${args.entityPath} within ${args.fullyQualifiedNamespace}: `,
-          args.error,
-        );
+        this.logger.error(` ServiceBusConsumerService recived an error ${args.entityPath} within ${args.fullyQualifiedNamespace}:  `)
+        
       },
     });
   }
