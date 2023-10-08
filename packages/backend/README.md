@@ -10,6 +10,7 @@ git clone https://github.com/msHamed1/Azure-Nest.git
 cd Azure-Nest
 
 # build the container it will run mongo , mongo-express  and will build the frontend for you  
+cd .. && cd ..
 docker-compose up
 
 
