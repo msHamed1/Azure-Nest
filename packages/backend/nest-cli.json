@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/gateWay/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/gateWay/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/gateWay",
+  "projects": {
+    "gateWay": {
+      "type": "application",
+      "root": "apps/gateWay",
+      "entryFile": "main",
+      "sourceRoot": "apps/gateWay/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/gateWay/tsconfig.app.json"
+      }
+    },
+    "event-hub-consumer": {
+      "type": "application",
+      "root": "apps/event-hub-consumer",
+      "entryFile": "main",
+      "sourceRoot": "apps/event-hub-consumer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/event-hub-consumer/tsconfig.app.json"
+      }
+    },
+    "event-hub-producer": {
+      "type": "application",
+      "root": "apps/event-hub-producer",
+      "entryFile": "main",
+      "sourceRoot": "apps/event-hub-producer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/event-hub-producer/tsconfig.app.json"
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/",
+      "entryFile": "index",
+      "sourceRoot": "libs/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/tsconfig.lib.json"
+      }
+    },
+    "service-bus-consumer": {
+      "type": "application",
+      "root": "apps/service-bus-consumer",
+      "entryFile": "main",
+      "sourceRoot": "apps/service-bus-consumer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/service-bus-consumer/tsconfig.app.json"
+      }
+    }
+  }
+}
