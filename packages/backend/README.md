@@ -1,50 +1,51 @@
 
-## Installation
+### To setup the project
+First you need to install docker  [https://www.docker.com/products/docker-desktop/](Docker Web site ).
+Then 
+```sh
+# clone the project 
+git clone https://github.com/msHamed1/Azure-Nest.git
 
-First run the docker:
+# navigate to the project 
+cd Azure-Nest
 
-```bash
-$ docker pull mongo
-```
-Run the Azure Event Hubs Emulator Container: 
+# build the container it will run mongo , mongo-express  and will build the frontend for you  
+docker-compose up
 
-```bash
-$ docker run -d -p 27017:27017 --name mobileApp mongo
-```
 
-## Running the app
-
-```bash
-# watch mode
-$ npm run start:dev
-
-# run the microservice in watch mode
-$ npm run start:dev event-hub-consumer
 ```
 
-## Test
+At this point you will have mongo db connection string bellow   
+[MongoExpress]( http://localhost:8081/) #PORT 8081 [use name = mexpress , password = mexpress]
+will be  running on a docker container
 
-```bash
-# unit tests
-$ yarn run test
+```sh
+# install backend dependicies 
+ npm install 
 
-# e2e tests
-$ yarn run test:e2e
+# [YOU are in the backend folder still for windows ] run
 
-# test coverage
-$ yarn run test:cov
+echo > .env 
+
+#add your you settings for your .env file 
+
+DATABASE_URL=mongodb://root:password@localhost:27017/
+EVENT_HUB_CONNECTION #contact me for the URL
+EVENT_HUB_GROUP=$Default
+EVENT_BUS_SERVICE #contact me for the URL
+EVENT_HUB_SEND_CONNECTION #contact me for the URL
+
+# Once .env file is created and its values added 
+
+### run and combile 
+
+npm run start:dev #Project gateway
+
+npm run start:EH-consumer #Event hub consumer microservice
+
+npm run start:EH-producer #Event hub consumer microservice
+
+npm run start:SB-consumer #Seruvce bus consumer microservice
+
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
