@@ -55,7 +55,7 @@ export abstract class ServiceBusConsumerService implements OnModuleInit {
       tax
     }
       )
-      this.logger.info(` ServiceBusConsumerService recived a message and a new resource is created `)
+      this.logger.info(` Service Bus Consumer Service recived a message and a new resource is created `)
     // Call the child class-specific logic
     return this.handleCustomMessage(message);
   }
@@ -68,7 +68,7 @@ export abstract class ServiceBusConsumerService implements OnModuleInit {
           const messageBody = message.body;
           await this.handleMessage(messageBody);
         } catch (error) {
-          this.logger.error(` ServiceBusConsumerService recived an error ${error} `)
+          this.logger.error(` Service Bus Consumer Service recived an error ${error} `)
         }
       },
       processError: async (args) => {

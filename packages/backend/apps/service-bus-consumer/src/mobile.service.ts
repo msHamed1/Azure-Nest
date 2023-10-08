@@ -20,7 +20,7 @@ export class MobileServices {
       return createdCat.save();
     } catch (err) {
       this.logger.error(
-        `Error Creating a resource from MobileServices  ${createMobileDto.imme} : ${err.message}`,
+        `Error Creating a resource from Mobile Services  ${createMobileDto.imme} : ${err.message}`,
       );
     }
   }

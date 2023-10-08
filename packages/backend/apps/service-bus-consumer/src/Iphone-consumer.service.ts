@@ -17,7 +17,7 @@ export class IphoneQueueConsumerService extends ServiceBusConsumerService {
 
   async handleCustomMessage(message: any): Promise<void> {
     // Implement your custom logic to handle iPhone messages
-    console.log(`Received iPhone message: ${message}`);
+    console.log(`Received iPhone message : ${message}`);
     console.log(message)
   }
 }
