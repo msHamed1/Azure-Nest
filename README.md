@@ -17,7 +17,9 @@ docker-compose up
 
 ```
 
-At this point you will have mongo  and  mongo-express[http://localhost:8081/](MongoExpress) #PORT 8081 and the [http://localhost:4002/](Frontend) on #PORT 4002  running 
+At this point you will have mongo db connection string bellow   
+[MongoExpress]( http://localhost:8081/) #PORT 8081 [use name = mexpress , password = mexpress]
+[Frontend]( http://localhost:4002/) on #PORT 4002  running on docker container
 
 ```sh
 # install backend dependicies 
