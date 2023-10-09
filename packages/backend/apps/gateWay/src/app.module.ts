@@ -1,13 +1,13 @@
-import { Module ,Logger} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
-import { DummyHttpExtractor } from './corn/DummyExtractor';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MobileSchema } from 'libs/src';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerModule } from 'libs/src/logger/loggerFactory';
+import { DummyGenerator } from './corn/DummyGenerator';
 
 
 
@@ -27,6 +27,6 @@ import { LoggerModule } from 'libs/src/logger/loggerFactory';
     
   controllers: [AppController],
   providers: [AppService
-  ,DummyHttpExtractor
+  ,DummyGenerator
   ]})
 export class AppModule {}
