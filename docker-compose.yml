@@ -28,21 +28,22 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: mexpress
      
   frontend-builder:
+    image: packages-frontend-iamge 
     build:
       context: .
       dockerfile: ./Frontend.Dockerfile 
     container_name: frontend-builder
-    volumes:
-      - ./packages/frontend:/app 
-    working_dir: /app
-    command: ["npm", "run", "build"] 
-
-  frontend-app:
-    image: nginx:1.21
-    container_name: frontend-app
     ports:
-      - "4002:80" 
-    volumes:
-      - ./packages/frontend/build:/usr/share/nginx/html 
-    depends_on:
-      - frontend-builder 
+      - 8080:80
+
+  #frontend-app:
+    #image: nginx:1.21
+    #container_name: frontend-app
+    #ports:
+      #- "4002:80" 
+    #volumes:
+      #- ./packages/frontend/build:/usr/share/nginx/html 
+    #depends_on:
+      #- frontend-builder 
+
+  

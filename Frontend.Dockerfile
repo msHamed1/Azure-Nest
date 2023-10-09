@@ -1,15 +1,19 @@
 FROM node:18.15.0-alpine3.16 as Builder
 
 WORKDIR /app
+
 COPY ./packages/frontend/ .
 
-RUN npm  install
+RUN npm install
+COPY ./packages/frontend/ .
 RUN npm run build
 
 FROM nginx:1.21
-WORKDIR /usr/src/app
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
 
-COPY --from=builder /app/build /usr/share/nginx/html
-EXPOSE 4002
+COPY --from=builder /app/build .
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ] 
+
+#CMD ["nginx", "-g", "daemon off;"]
