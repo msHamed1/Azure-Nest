@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Main from "./views/Main"
 import { useState } from 'react';
@@ -10,9 +9,9 @@ const [main, setMain] = useState(true)
   
   return (
     <div className="App">
-      <BlueHeader  showLogs={()=>setMain(false)} showMobiles={()=>setMain(true)}/>
-      {main &&<Main/> }
-      {!main &&<Logs/> }
+      <BlueHeader nav={main}  showLogs={()=>setMain(false)} showMobiles={()=>setMain(true)}/>
+      {main ? <Main/>  :<Logs/> }
+   
       
 
     </div>

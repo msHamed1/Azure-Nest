@@ -1,6 +1,5 @@
 import React ,{ useEffect, useState} from "react";
-import BlueHeader from "../components/Headers";
-import { Button, Col, Row, Space, Table } from "antd";
+import {  Col, Row, Space, Table, Typography } from "antd";
 
 
 const columns = [
@@ -66,10 +65,11 @@ const Logs = () => {
         <>
         <Space
           style={{
-            marginBottom: 50,
+            marginTop: 50,
+            marginBottom: 20,
           }}
         >
-         
+          <Typography>List of Logs: </Typography>
         </Space>
         <Table columns={columns} dataSource={data}  />
       </>
