@@ -1,8 +1,8 @@
 {
-  "name": "gateWay",
+  "name": "Azure-Nest",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Mahmoud Hamed ",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
