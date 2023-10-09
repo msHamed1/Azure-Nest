@@ -51,7 +51,7 @@ npm run start:dev #Project gateway
 
 npm run start:EH-consumer #Event hub consumer microservice
 
-npm run start:EH-producer #Event hub consumer microservice
+npm run start:EH-producer #Event hub producer microservice
 
 npm run start:SB-consumer #Seruvce bus consumer microservice
 
