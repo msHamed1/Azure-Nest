@@ -1,6 +1,6 @@
 import { Injectable ,Inject } from '@nestjs/common';
 import { EventHubConsumerClient, EventPosition, PartitionContext, ReceivedEventData } from '@azure/event-hubs';
-import { Imessage, SERVICE_QUEUE_TYPE } from 'libs/src';
+import { Imessage, SERVICE_QUEUE_TYPE, transformLogMessage } from 'libs/src';
 import { IphoneQueue, SamsungQueue } from './event-hub-consumer.gateway';
 import { Logger } from 'winston';
 
@@ -40,11 +40,11 @@ export class EventHubConsumerService {
     try {
       this.consumerClient.subscribe({
         processEvents: async (events: ReceivedEventData[], context: PartitionContext) => {
-          this.logger.info("EVENT RECEIVED FROM AZURE EVENT HUB");
+          this.logger.info(transformLogMessage("EVENT RECEIVED FROM AZURE EVENT HUB",'EventHubConsumerService'));
           for (const event of events) {
             const eventData = event.body as Array<Imessage>;
 
-            this.logger.info("DATA RECEIVED", eventData);
+            this.logger.info(transformLogMessage("EVENT RECEIVED FROM AZURE EVENT HUB",'EventHubConsumerService',[eventData]));
 
             for await (const item of eventData) {
               if (item.type == SERVICE_QUEUE_TYPE.IPHONE) {
@@ -52,18 +52,22 @@ export class EventHubConsumerService {
               } else if (item.type == SERVICE_QUEUE_TYPE.SAMSUNG) {
                 this.samsungQueue.sendMessage(item);
               } else {
-                this.logger.error(`Data is not compatible ${JSON.stringify(item)}`);
+                this.logger.error(transformLogMessage("Data is not compatible",'EventHubConsumerService',[item]));
+
+                
               }
             }
           }
         },
         processError: async (err: Error) => {
           // Handle errors here
-          this.logger.error(`${err.message} ${JSON.stringify(err)}`);
+          this.logger.error(transformLogMessage(`${err.message}`,'EventHubConsumerService',[err]));
+
+         
         },
       });
     } catch (err) {
-      this.logger.error(`${err.message} ${JSON.stringify(err)}`);
+      this.logger.error(transformLogMessage(`${err.message} `,'EventHubConsumerService',[err]));
     }
   }
 }

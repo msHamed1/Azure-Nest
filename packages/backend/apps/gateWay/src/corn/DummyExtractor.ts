@@ -2,7 +2,7 @@ import { IExtractor } from "./IExtractor";
 import { Injectable ,Inject } from '@nestjs/common';
 import { ClientProxy } from "@nestjs/microservices";
 import { Cron } from '@nestjs/schedule';
-import { Imessage, mobileType, uuid } from "libs/src";
+import { Imessage, SERVICE_QUEUE_TYPE, getRandomMobileName, mobileType, transformLogMessage, uuid } from "libs/src";
 import { Logger } from "winston";
 
 /**
@@ -15,12 +15,15 @@ import { Logger } from "winston";
 function httpCall<T>() {
   return new Promise<{data: Imessage[] }>((resolve, reject) => {
     setTimeout(() => {
+      const name =  getRandomMobileName();
+      const type = name.includes("iPhone")? SERVICE_QUEUE_TYPE.IPHONE : SERVICE_QUEUE_TYPE.SAMSUNG
       resolve({
+       
         data: [{
           id  :   uuid(),
           type :   mobileType(),
-          name :   "Mahmoud ",
-          price:   300,
+          name :  getRandomMobileName(),
+          price:   (Math.random() * (5000 - 1500) + 1500).toFixed(2),
           imme :   uuid(),
         
         }]
@@ -50,17 +53,18 @@ export class DummyHttpExtractor implements IExtractor {
     const response = await httpCall<any>();
     try{
 
-      this.logger.info(`Connection to PRODUCER_SERVICE `)
+      this.logger.info( transformLogMessage("Connection to PRODUCER_SERVICE",this.extractorName))
+      
       await this.client.connect();
       const pattern = { cmd: 'DATA_GENERATED' };
      // console.log("data to be send")
       this.client.emit<number>(pattern, response.data)
-      this.logger.info(`DATA SENT FROM ${this.extractorName} To PRODUCER SERVICE `)
+      this.logger.info(transformLogMessage(`DATA SENT FROM ${this.extractorName} To PRODUCER SERVICE `,this.extractorName))
       
 
     }catch(err){
       
-      this.logger.error(`Error connecting to PRODUCER_SERVICE ${err.message} `)
+      this.logger.error(transformLogMessage(`Error connecting to PRODUCER_SERVICE ${err.message} `,this.extractorName))
 
       
     }

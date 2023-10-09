@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { EventHubProducerClient } from '@azure/event-hubs';
 import { Logger } from 'winston';
+import { transformLogMessage } from 'libs/src';
 
 /**
  * Service for producing data to Azure Event Hub.
@@ -34,12 +35,13 @@ export class EventHubProducerService {
     try {
       const batch = await this.producerClient.createBatch();
       batch.tryAdd({ body: data });
-      this.logger.info(`Send the batch of events ${JSON.stringify(data)}`);
+      this.logger.info( transformLogMessage(`Send the batch of events ${JSON.stringify(data)}`,EventHubProducerService.name,[data]));
 
       await this.producerClient.sendBatch(batch);
     } catch (error) {
       this.logger.error(
-        `Error sending data to Event Hub: ${JSON.stringify(error)}`,
+        transformLogMessage("rror sending data to Event Hub:","EventHubProducerService",[error])
+       
       );
     }
   }

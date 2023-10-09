@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ServiceBusClient } from '@azure/service-bus';
-import { Imessage } from 'libs/src';
+import { Imessage, transformLogMessage } from 'libs/src';
 import { Logger } from 'winston';
 
 @Injectable()
@@ -52,7 +52,7 @@ export class IphoneQueue extends MessageBusQueue {
    */
   async sendMessage(message: Imessage) {
     try {
-      this._logger.info('SENDING DATA TO SERVICE BUS QUEUE : iphone-queue');
+      this._logger.info(transformLogMessage('SENDING DATA TO SERVICE BUS QUEUE  iphone-queue',"IphoneQueue",[message]));
       const sender = this.serviceBusClient.createSender('iphone-queue');
 
       const message1 = {
@@ -61,7 +61,8 @@ export class IphoneQueue extends MessageBusQueue {
 
       await sender.sendMessages(message1);
     } catch (err) {
-      this._logger.info('ERROR  TO SERVICE BUS QUEUE : samsung-queue', err);
+      this._logger.info(transformLogMessage('Error sending message to SERVICE BUS QUEUE type iphone-queue',"Iphone Queue",[err]))
+    
     }
   }
 }
@@ -77,14 +78,14 @@ export class SamsungQueue extends MessageBusQueue {
    */
   async sendMessage(message: Imessage) {
     try {
-      this._logger.info('SENDING DATA TO SERVICE BUS QUEUE : samsung-queue');
+      this._logger.info(transformLogMessage('SENDING DATA TO SERVICE BUS QUEUE : samsung-queue' ,"SamsungQueue",[message]));
       const sender = this.serviceBusClient.createSender('samsung-queue');
       const message1 = {
         body: message,
       };
       await sender.sendMessages(message1);
     } catch (err) {
-      this._logger.info('ERROR  TO SERVICE BUS QUEUE : samsung-queue', err);
+      this._logger.info(transformLogMessage('ERROR  TO SERVICE BUS QUEUE : samsung-queue','samsung-queue', [err]));
     }
   }
 }

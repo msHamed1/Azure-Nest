@@ -1,3 +1,5 @@
+import { SERVICE_QUEUE_TYPE } from "../enums/enum";
+
 export function uuid():string { // Public Domain/MIT
     var d = new Date().getTime();//Timestamp
     var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
@@ -16,7 +18,35 @@ export function uuid():string { // Public Domain/MIT
 
 
 export function mobileType(): string {
-    const productTypes = ["Iphone", "Samsung"];
+    const productTypes = [SERVICE_QUEUE_TYPE.IPHONE, SERVICE_QUEUE_TYPE.SAMSUNG];
     const randomIndex = Math.floor(Math.random() * productTypes.length);
     return productTypes[randomIndex];
+  }
+
+  export function transformLogMessage(message :string,location:string , data:Array<any>=[]){
+
+    return JSON.stringify({location,message, data})
+  }
+
+
+  export function getRandomMobileName() {
+    const mobileNames = [
+      "iPhone 12",
+      "Samsung Galaxy S21",
+      "iPhone 11 pro",
+      "iPhone 13",
+      "iPhone 14 pro max",
+      "Samsung Galaxy S22",
+      "Samsung Galaxy S23",
+      "Samsung Galaxy S21+",
+      "Samsung Galaxy S21s",
+      "Samsung Galaxy S22s+",
+      // Add more mobile names here
+    ];
+  
+    // Generate a random index within the length of the mobileNames array
+    const randomIndex = Math.floor(Math.random() * mobileNames.length);
+  
+    // Return the randomly selected mobile name
+    return mobileNames[randomIndex];
   }

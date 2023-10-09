@@ -2,7 +2,7 @@ import { ServiceBusClient, ServiceBusReceiver } from '@azure/service-bus';
 import { OnModuleInit ,Inject } from '@nestjs/common';
 import { MobileServices } from './mobile.service';
 import { Mobile } from 'libs/src/Entity/Mobile.schema';
-import { Imessage } from 'libs/src';
+import { Imessage, transformLogMessage } from 'libs/src';
 import { Logger } from 'winston';
 
 /**
@@ -45,19 +45,25 @@ export abstract class ServiceBusConsumerService implements OnModuleInit {
   handleMessage(message: Imessage): Promise<void> {
     // Common logic that can be shared among all child classes { Map }
     const tax= message.price*0.15;
-    
-    this._mobileService.create({
-      imme:message.imme ||" ",
-      time:new Date(),
-      name:message.name ||" ",
-      price:message.price || 0,
-      type:message.type ||" ",
-      tax
+    try{
+      this._mobileService.create({
+        imme:message.imme,
+        time:new Date(),
+        name:message.name ,
+        price:message.price ,
+        type:message.type ,
+        tax
+      }
+        )
+        this.logger.info( transformLogMessage('Service Bus Consumer Service recived a message and a new resource is created',"ServiceBusConsumerService"))
+      // Call the child class-specific logic
+      return this.handleCustomMessage(message);
+
+    }catch(er){
+      this.logger.error( transformLogMessage(er.message,"ServiceBusConsumerService",[er]))
     }
-      )
-      this.logger.info(` Service Bus Consumer Service recived a message and a new resource is created `)
-    // Call the child class-specific logic
-    return this.handleCustomMessage(message);
+    
+  
   }
 
 
@@ -68,12 +74,13 @@ export abstract class ServiceBusConsumerService implements OnModuleInit {
           const messageBody = message.body;
           await this.handleMessage(messageBody);
         } catch (error) {
-          this.logger.error(` Service Bus Consumer Service recived an error ${error} `)
+          this.logger.error( transformLogMessage(` Service Bus Consumer Service recived an error ${error} ` ,"Service Bus Consumer",[error]))
         }
       },
       processError: async (args) => {
-        this.logger.error(` ServiceBusConsumerService recived an error ${args.entityPath} within ${args.fullyQualifiedNamespace}:  `)
-        
+      //  this.logger.error(` ServiceBusConsumerService recived an error ${args.entityPath} within ${args.fullyQualifiedNamespace}:  `)
+        this.logger.error( transformLogMessage(`  ServiceBusConsumerService recived an error ${args.entityPath} within ${args.fullyQualifiedNamespace}:  ` ,"Service Bus Consumer",[args]))
+
       },
     });
   }

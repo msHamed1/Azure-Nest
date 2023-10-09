@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Mobile } from 'libs/src/Entity/Mobile.schema';
 import { CreateMobileDto } from './dto/createMobile.dto';
 import { Logger } from 'winston';
+import { transformLogMessage } from 'libs/src';
 
 @Injectable()
 export class MobileServices {
@@ -20,7 +21,8 @@ export class MobileServices {
       return createdCat.save();
     } catch (err) {
       this.logger.error(
-        `Error Creating a resource from Mobile Services  ${createMobileDto.imme} : ${err.message}`,
+        transformLogMessage(`Error Creating a resource from Mobile Services :${err.message}`,"Mobile Services ",[err])
+       
       );
     }
   }
