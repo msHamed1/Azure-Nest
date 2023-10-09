@@ -53,7 +53,7 @@ const DataTable = () => {
             timeZoneName: "short",
             timeZone: "Asia/Dubai",
           };
-        res.forEach(element => {
+        res.data.result.forEach(element => {
             const object ={
                  key: element.id,
                  name:  element.name,

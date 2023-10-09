@@ -42,10 +42,10 @@ const Logs = () => {
             timeZoneName: "short",
             timeZone: "Asia/Dubai",
           };
-        res.forEach(element => {
+        res.data.result.forEach(element => {
             const object ={
                 key: element.id,
-                name:  element.message,
+                name:  (element.message),
                  age: new Date(element.timestamp).toLocaleDateString('en-us',options),
                  address: element.level,
             }
@@ -61,7 +61,7 @@ const Logs = () => {
     <>
       
       <Row gutter={[16, 16]} justify="center " align="middle ">
-        <Col span={12}>
+        <Col span={18}>
         <>
         <Space
           style={{
