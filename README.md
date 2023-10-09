@@ -2,7 +2,7 @@
 ![img](architect.png)
 
 
-### Proplem we did solve 
+### Project usecase  
 
  This is example of an application that produce data , and send it to the Azure event hub then , reads data from an Azure Event Hub and sends them to different Service Bus queues based on specific criteria. Subsequently, the application should listen to the queues, retrieve the messages, and store them in a MongoDB database for further processing and analysis.
 
