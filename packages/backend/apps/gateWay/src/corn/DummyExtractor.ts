@@ -4,15 +4,6 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Cron } from '@nestjs/schedule';
 import { Imessage, mobileType, uuid } from "libs/src";
 import { Logger } from "winston";
-/**
- * Configuration object for the DummyHttpExtractor class.
- */
-export type TDummyHttpExtractorConfig = {
-  name    : string;
-  url     : string;
-  headers : Record<string, string>;
-  payload : unknown;
-}
 
 /**
  * Makes an HTTP call to the specified URL with the given headers and payload.
@@ -42,7 +33,7 @@ function httpCall<T>() {
  * Extractor class for DummyHttp data.
  */
 @Injectable()
-export class DummyHttpExtractor implements IExtractor< TDummyHttpExtractorConfig> {
+export class DummyHttpExtractor implements IExtractor {
     constructor(
         @Inject('PRODUCER_SERVICE') private client: ClientProxy,
         @Inject("winston")private readonly logger:Logger
@@ -50,12 +41,11 @@ export class DummyHttpExtractor implements IExtractor< TDummyHttpExtractorConfig
   extractorName = 'DummyHttp';
 
   /**
-   * Extracts data from the specified configuration object.
-   * @param config - The configuration object to extract data from.
+   * Extracts data .
    * @returns An object containing the extracted data.
    */
   @Cron('*/5 * * * * *')
-  async extract(config: TDummyHttpExtractorConfig) {
+  async extract() {
    
     const response = await httpCall<any>();
     try{
@@ -63,8 +53,9 @@ export class DummyHttpExtractor implements IExtractor< TDummyHttpExtractorConfig
       this.logger.info(`Connection to PRODUCER_SERVICE `)
       await this.client.connect();
       const pattern = { cmd: 'DATA_GENERATED' };
-      console.log("data to be send")
+     // console.log("data to be send")
       this.client.emit<number>(pattern, response.data)
+      this.logger.info(`DATA SENT FROM ${this.extractorName} To PRODUCER SERVICE `)
       
 
     }catch(err){

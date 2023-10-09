@@ -1,11 +1,7 @@
-/**
- * Represents the extracted data with its type, data and whether it has been mapped or not.
- */
-
   /**
-   * Represents an extractor that can extract data of type `ExtractedData` using a configuration of type `Config`.
+   * Represents an extractor that will use the corn
    */
-  export interface IExtractor< Config> {
+  export interface IExtractor {
 
     
     /**
@@ -13,8 +9,8 @@
      */
     extractorName: string;
     /**
-     * Extracts data using the provided configuration.
-     * @param config The configuration to use for extraction.
+     * Extracts data 
+     * 
      */
-    extract(config: Config): void;
+    extract(): void;
   }
