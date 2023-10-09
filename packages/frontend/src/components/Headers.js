@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Button, Space } from 'antd';
+import { Button } from 'antd';
 import { Col, Row } from "antd";
 
 const { Header } = Layout;
