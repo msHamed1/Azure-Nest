@@ -45,6 +45,7 @@ export abstract class MessageBusQueue {
  */
 @Injectable()
 export class IphoneQueue extends MessageBusQueue {
+  private qeuueName=process.env.EVENT_HUB_QUEUE_NAME1
 
    /**
    * Sends a message to the 'iphone-queue'.
@@ -52,8 +53,8 @@ export class IphoneQueue extends MessageBusQueue {
    */
   async sendMessage(message: Imessage) {
     try {
-      this._logger.info(transformLogMessage('SENDING DATA TO SERVICE BUS QUEUE  iphone-queue',"IphoneQueue",[message]));
-      const sender = this.serviceBusClient.createSender('iphone-queue');
+      this._logger.info(transformLogMessage('SENDING DATA TO SERVICE BUS QUEUE  iphone-queue',this.qeuueName,[message]));
+      const sender = this.serviceBusClient.createSender(this.qeuueName);
 
       const message1 = {
         body: message,
@@ -61,7 +62,7 @@ export class IphoneQueue extends MessageBusQueue {
 
       await sender.sendMessages(message1);
     } catch (err) {
-      this._logger.info(transformLogMessage('Error sending message to SERVICE BUS QUEUE type iphone-queue',"Iphone Queue",[err]))
+      this._logger.info(transformLogMessage('Error sending message to SERVICE BUS QUEUE type iphone-queue',this.qeuueName,[err]))
     
     }
   }
@@ -72,20 +73,22 @@ export class IphoneQueue extends MessageBusQueue {
  */
 @Injectable()
 export class SamsungQueue extends MessageBusQueue {
+
+  private queueName=process.env.EVENT_HUB_QUEUE_NAME2
     /**
    * Sends a message to the 'iphone-queue'.
    * @param {Imessage} message - The message to be sent to the queue.
    */
   async sendMessage(message: Imessage) {
     try {
-      this._logger.info(transformLogMessage('SENDING DATA TO SERVICE BUS QUEUE : samsung-queue' ,"SamsungQueue",[message]));
-      const sender = this.serviceBusClient.createSender('samsung-queue');
+      this._logger.info(transformLogMessage('SENDING DATA TO SERVICE BUS QUEUE :' ,this.queueName,[message]));
+      const sender = this.serviceBusClient.createSender(this.queueName);
       const message1 = {
         body: message,
       };
       await sender.sendMessages(message1);
     } catch (err) {
-      this._logger.info(transformLogMessage('ERROR  TO SERVICE BUS QUEUE : samsung-queue','samsung-queue', [err]));
+      this._logger.info(transformLogMessage('ERROR  TO SERVICE BUS QUEUE : ',this.queueName [err]));
     }
   }
 }

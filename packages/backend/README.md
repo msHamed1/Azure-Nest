@@ -34,11 +34,21 @@ echo > .env
 
 #add your you settings for your .env file 
 
-DATABASE_URL=mongodb://root:password@localhost:27017/
-EVENT_HUB_CONNECTION #contact me for the URL
-EVENT_HUB_GROUP=$Default
-EVENT_BUS_SERVICE #contact me for the URL
-EVENT_HUB_SEND_CONNECTION #contact me for the URL
+DATABASE_URL="mongodb://root:password@localhost:27017/"
+
+
+
+EVENT_HUB_CONNECTION=     # your EVENT hub connection string
+EVENT_HUB_GROUP=          "$Default"
+
+EVENT_HUB_QUEUE_NAME1=    # your EVENT hub QUEUE_NAME
+EVENT_HUB_QUEUE_NAME2=    # your EVENT hub QUEUE_NAME 2
+
+
+EVENT_BUS_SERVICE=        # your EVENT_BUS connection string
+
+EVENT_HUB_SEND_CONNECTION=  #your EVENT hub  connection string for sending
+
 
 # Once .env file is created and its values added 
 

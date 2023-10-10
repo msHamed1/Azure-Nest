@@ -26,7 +26,6 @@ export class EventHubConsumerService {
     private readonly logger: Logger,
   ) {
     const connectionString = process.env.EVENT_HUB_CONNECTION;
-    const eventHubName = "mobile-event";
     const consumerGroupName = process.env.EVENT_HUB_GROUP;
 
     this.consumerClient = new EventHubConsumerClient(consumerGroupName, connectionString);
