@@ -37,30 +37,30 @@ echo > .env
 
 #add your you settings for your .env file 
 
-EVENT_HUB_CONNECTION=     # your EVENT hub connection string consume
+EVENT_HUB_CONNECTION=       # your EVENT hub connection string consume
 
 EVENT_HUB_SEND_CONNECTION=  #your EVENT hub  connection string for producing events
 
-EVENT_HUB_GROUP=          "$Default"
+EVENT_HUB_GROUP=            "$Default"
 
-EVENT_HUB_QUEUE_NAME1=    # your EVENT hub QUEUE_NAME
-EVENT_HUB_QUEUE_NAME2=    # your EVENT hub QUEUE_NAME 2
+EVENT_HUB_QUEUE_NAME1=      # your EVENT hub QUEUE_NAME
+EVENT_HUB_QUEUE_NAME2=      # your EVENT hub QUEUE_NAME 2
 
 
-EVENT_BUS_SERVICE=        # your EVENT_BUS connection string
+EVENT_BUS_SERVICE=          # your EVENT_BUS connection string
 
 
 # Once .env file is created and its values added 
 
 ### run and combile 
 
-npm run start:dev #Project gateway
+npm run start:dev           #Project gateway
 
-npm run start:EH-consumer #Event hub consumer microservice
+npm run start:EH-consumer   #Event hub consumer microservice
 
-npm run start:EH-producer #Event hub producer microservice
+npm run start:EH-producer   #Event hub producer microservice
 
-npm run start:SB-consumer #Seruvce bus consumer microservice
+npm run start:SB-consumer   #Seruvce bus consumer microservice
 
 ```
 
